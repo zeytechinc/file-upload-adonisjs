@@ -1,0 +1,41 @@
+enum enu_storage_type {
+  local
+  s3
+}
+
+table file_upload_endpoints {
+  id integer [pk, increment]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+  uri varchar(255) [not null, unique, note: "this becomes part of the upload uri in the api"]
+  endpoint_name varchar(255) [not null, note: "display name for this endpoint"]
+  filename_format varchar(255)
+  overwrite boolean [not null, default: false, note: 'overwrite on existing destination file name upload.  This is irrelevant if {timestamp} is used in the filename format.']
+  max_file_size_bytes integer [not null, default: 0, note: "max upload size in bytes. Use 0 for no limit."]
+  accept varchar(2048) [note: "comma-delimited string of accepted file extensions."]
+  multiple_files_enabled boolean [not null, default: true]
+  storage_type enu_storage_type [not null, default: "local"]
+  storage_path varchar(1024) [not null, default: '']
+  auto_expiration_enabled boolean [not null, default: false]
+  auto_expiration_seconds integer [note: "when auto expiration is enabled, expire uploaded files x seconds after upload"]
+  completion_event_name varchar(255) [note: "Adonis event to fire on successful upload.  Allows apps to process files after upload via event listeners."]
+}
+
+table file_upload_webhooks {
+  id integer [pk, increment]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+  file_upload_endpoint_id integer [not null, ref: > file_upload_endpoints.id]
+  webhook_url varchar(2048) [not null]
+  description varchar(1024)
+}
+
+table file_upload_histories {
+  id integer [pk, increment]
+  created_at timestamp [not null]
+  updated_at timestamp [not null]
+  file_upload_endpoint_id integer [not null, ref: > file_upload_endpoints.id]
+  file_size_bytes integer [not null]
+  filename varchar(255) [not null]
+  deleted_at timestamp
+}

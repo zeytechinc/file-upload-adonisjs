@@ -1,30 +1,38 @@
 {
   "name": "zeytech-adonis-file-upload",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0.72",
+  "description": "File upload plugin for Zeytech API work.",
+  "main": "build/providers/FileUploadProvider.js",
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
     "test": "node japaFile.js",
     "clean": "del build",
     "compile": "npm run lint && npm run clean && tsc",
-    "build": "npm run compile",
+    "copyfiles": "copyfiles \"templates/**/*.txt\" build",
+    "build": "npm run update-templates && npm run compile && npm run copyfiles",
     "prepublishOnly": "npm run build",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write .",
     "commit": "git-cz",
     "release": "np",
     "version": "npm run build",
-    "sync-labels": "github-label-sync --labels ./node_modules/@adonisjs/mrm-preset/gh-labels.json zeytechinc/zeytech-adonis-file-upload"
+    "sync-labels": "github-label-sync --labels ./node_modules/@adonisjs/mrm-preset/gh-labels.json zeytechinc/zeytech-adonis-file-upload",
+    "update-templates": "ts-node ./scripts/update-templates.ts"
   },
   "author": "Zeytech Inc.",
   "license": "Unlicense",
+  "types": "build/adonis-typings/index.d.ts",
+  "typings": "build/adonis-typings/index.d.ts",
   "devDependencies": {
+    "@adonisjs/core": "^5.1.11",
+    "@adonisjs/lucid": "^15.0.3",
     "@adonisjs/mrm-preset": "^4.1.2",
     "@adonisjs/require-ts": "^2.0.7",
+    "@adonisjs/sink": "^5.1.5",
     "@types/node": "^16.6.1",
     "commitizen": "^4.2.4",
+    "copyfiles": "^2.4.1",
     "cz-conventional-changelog": "^3.3.0",
     "del-cli": "^4.0.1",
     "doctoc": "^2.0.1",
@@ -35,15 +43,22 @@
     "github-label-sync": "^2.0.2",
     "husky": "^7.0.1",
     "japa": "^3.1.1",
+    "kleur": "^4.1.4",
     "mrm": "^3.0.8",
     "np": "^7.5.0",
     "prettier": "^2.3.2",
+    "ts-node": "^10.2.0",
     "typescript": "^4.3.5"
   },
   "files": [
     "build/src",
     "build/index.d.ts",
-    "build/index.js"
+    "build/index.js",
+    "build/instructions.js",
+    "build/adonis-typings",
+    "build/templates",
+    "build/standalone.js",
+    "build/standalone.d.ts"
   ],
   "config": {
     "commitizen": {
@@ -53,5 +68,24 @@
   "np": {
     "contents": ".",
     "anyBranch": false
+  },
+  "adonisjs": {
+    "instructions": "./build/instructions.js",
+    "types": "zeytech-adonis-file-upload",
+    "providers": [
+      "zeytech-adonis-file-upload"
+    ],
+    "templates": {
+      "basePath": "./build/templates",
+      "config": [
+        {
+          "src": "config.txt",
+          "dest": "file-uploads"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
   }
 }

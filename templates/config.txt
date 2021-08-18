@@ -1,0 +1,40 @@
+import { FileUploadsConfig } from '@ioc:Adonis/Addons/Zeytech/FileUploads'
+
+const fileUploadsConfig: FileUploadsConfig = {
+  /* ---------------------
+   * The prefix to use before all file upload api endpoints.
+   * Example, if set to 'abc', all upload endpoints will be available at /abc/uploads...
+   * ---------------------
+   */
+  apiEndpointPrefix: '',
+
+  /* ---------------------
+   * The base endpoint name to use for all file upload api endpoints.
+   * For example, in PUT /uploads/:id, "uploads" is the base endpoint.
+   * ---------------------
+   */
+  apiBaseEndpoint: 'uploads',
+
+  /* ---------------------
+   * The default local path to store upload files at if one is not specified on an endpoint.
+   * If this is a relative path, it will be made relative to Application.tmpPath.
+   * ---------------------
+   */
+  defaultStoragePath: '/tmp/uploads',
+
+  /* ---------------------
+   * Whether or not to enable downloading previously uploaded files.  Controls whether or
+   * not the download API endpoint is registered on startup.
+   * ---------------------
+   */
+  enableDownloads: false,
+
+  /* ---------------------
+   * The base url to use when sending webhook requests out for the download url to the file.
+   * Only relevant is enableDownloads is set to true.
+   * ---------------------
+   */
+  downloadBaseUrl: 'http://localhost:3333',
+}
+
+export default fileUploadsConfig
