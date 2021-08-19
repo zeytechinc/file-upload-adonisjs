@@ -5,9 +5,12 @@ import { LoggerContract } from '@ioc:Adonis/Core/Logger'
 import { EmitterContract } from '@ioc:Adonis/Core/Event'
 import { FileValidationOptions, MultipartFileContract } from '@ioc:Adonis/Core/BodyParser'
 import { isAbsolute, join } from 'path'
+import fs from 'fs/promises'
+import { constants } from 'fs'
 import FileManager from './FileManager'
 import { FileUploadResultContract, StorageType } from './Contracts'
 import axios from 'axios'
+import { DatabaseContract, TransactionClientContract } from '@ioc:Adonis/Lucid/Database'
 
 export default class FileUploadsController {
   /* This controller class accepts the endpoint model as a constructor parameter because
@@ -16,6 +19,7 @@ export default class FileUploadsController {
    * them in.
    */
   constructor(
+    protected database: DatabaseContract,
     protected endpointModel: any, //typeof FileUploadEndpoint,
     protected historyModel: any, // typeof FileUploadHistory,
     protected event: EmitterContract,
@@ -73,11 +77,42 @@ export default class FileUploadsController {
 
   public async destroy({ params }: HttpContextContract) {
     const { id } = params
-    const existing = await this.endpointModel.find(id)
-    if (!existing) {
-      throw new Exception(`No record found for ${id}`, 400, 'E_AFU_NOT_FOUND')
+    const trx: TransactionClientContract = await this.database.transaction()
+    try {
+      const endpoint = await this.endpointModel.find(id, { client: trx })
+      if (!endpoint) {
+        throw new Exception(`No record found for ${id}`, 400, 'E_AFU_NOT_FOUND')
+      }
+      const webhookDelete = trx
+        .from('file_upload_webhooks')
+        .where('file_upload_endpoint_id', endpoint.id)
+        .delete()
+        .exec()
+
+      await endpoint.load('histories')
+      for (const history of endpoint.histories) {
+        // delete the file behind the history if it exists
+        if (endpoint.storageType === StorageType.local) {
+          try {
+            await fs.access(history.filename, constants.F_OK)
+            await fs.rm(history.filename)
+          } catch (ignoredError) {
+            // if it doesn't exist, nothing to do
+          }
+        }
+      }
+      const historyDelete = trx
+        .from('file_upload_histories')
+        .where('file_upload_endpoint_id', endpoint.id)
+        .delete()
+        .exec()
+      const endpointDelete = endpoint.useTransaction(trx).delete()
+      await Promise.all([webhookDelete, historyDelete, endpointDelete])
+      await trx.commit()
+    } catch (err) {
+      await trx.rollback()
+      throw err
     }
-    await existing.delete()
   }
 
   public async upload({ params, request, logger, response }: HttpContextContract) {

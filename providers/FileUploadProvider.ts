@@ -8,6 +8,7 @@ import Route from '@ioc:Adonis/Core/Route'
 import Config from '@ioc:Adonis/Core/Config'
 import { EmitterContract } from '@ioc:Adonis/Core/Event'
 import FileUploadsController from '../src/FileUploadsController'
+import { DatabaseContract } from '@ioc:Adonis/Lucid/Database'
 
 export default class FileUploadProvider {
   constructor(protected application: ApplicationContract) {}
@@ -18,12 +19,15 @@ export default class FileUploadProvider {
     const config: typeof Config = this.application.container.resolveBinding('Adonis/Core/Config')
     const router: typeof Route = this.application.container.resolveBinding('Adonis/Core/Route')
     const event: EmitterContract = this.application.container.resolveBinding('Adonis/Core/Event')
+    const database: DatabaseContract =
+      this.application.container.resolveBinding('Adonis/Lucid/Database')
     const EndpointModel = this.application.container.use('App/Models/FileUploadEndpoint')
     const EndpointHistoryModel = this.application.container.use('App/Models/FileUploadHistory')
 
     const apiPrefix = config.get('file-uploads.apiEndpointPrefix', '')
     const apiBaseEndpoint = config.get('file-uploads.apiBaseEndpoint', 'uploads')
     const controller = new FileUploadsController(
+      database,
       EndpointModel.default,
       EndpointHistoryModel.default,
       event,
