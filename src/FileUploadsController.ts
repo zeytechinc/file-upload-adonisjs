@@ -270,14 +270,17 @@ export default class FileUploadsController {
       if (webhookResponse.status >= 400) {
         logger.error(
           'webhook failure for endpoint %s, history id %s to url %s; webhook response %o',
-          endpoint.id,
-          historyRec.id,
-          url,
-          webhookResponse
+          [endpoint.id, historyRec.id, url, webhookResponse]
         )
       }
     } catch (err) {
-      logger.error('webhook exception for endpoint %s, history id %s to url %s; error %o', err)
+      logger.error(
+        'webhook exception for endpoint %s, history id %s to url %s; error %o',
+        endpoint.id,
+        historyRec.id,
+        url,
+        err
+      )
     }
   }
 }
