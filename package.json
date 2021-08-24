@@ -1,5 +1,5 @@
 {
-  "name": "zeytech-adonis-file-upload",
+  "name": "@zeytech/adonis-file-upload",
   "version": "1.0.76",
   "description": "File upload plugin for Zeytech API work.",
   "main": "build/providers/FileUploadProvider.js",
@@ -18,7 +18,9 @@
     "release": "np",
     "version": "npm run build",
     "sync-labels": "github-label-sync --labels ./node_modules/@adonisjs/mrm-preset/gh-labels.json zeytechinc/zeytech-adonis-file-upload",
-    "update-templates": "ts-node ./scripts/update-templates.ts"
+    "update-templates": "ts-node ./scripts/update-templates.ts",
+    "co:login": "aws codeartifact login --tool npm --repository zeytech-internal --domain zeytech --domain-owner 353361721131 --profile zeytech-dev --region us-east-1",
+    "prepare": "npm run co:login"
   },
   "author": "Zeytech Inc.",
   "license": "Unlicense",
