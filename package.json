@@ -1,6 +1,6 @@
 {
   "name": "@zeytech/file-upload-adonisjs",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "File upload plugin for Zeytech API work.",
   "main": "build/providers/FileUploadProvider.js",
   "repository": {
