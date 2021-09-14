@@ -1,5 +1,5 @@
 /*
- * File: file_upload_endpoints.txt
+ * File: file_upload_endpoints.ts
  * Created Date: Aug 16, 2021
  * Copyright (c) 2021 Zeytech Inc. (https://zeytech.com)
  * Author: Steve Krenek (https://github.com/skrenek)
