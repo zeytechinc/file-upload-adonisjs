@@ -1,8 +1,13 @@
 /*
- * @zeytech/adonis-file-upload
- *
- * (c) Zeytech Inc.
+ * File: FileUploadProvider.ts
+ * Created Date: Aug 16, 2021
+ * Copyright (c) 2021 Zeytech Inc. (https://zeytech.com)
+ * Author: Steve Krenek (https://github.com/skrenek)
+ * -----
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 import { ApplicationContract } from '@ioc:Adonis/Core/Application'
 import Route from '@ioc:Adonis/Core/Route'
 import Config from '@ioc:Adonis/Core/Config'

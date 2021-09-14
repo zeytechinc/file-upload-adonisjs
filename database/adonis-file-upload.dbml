@@ -1,3 +1,12 @@
+///*
+// * Filename: /Users/steve.krenek/work/zeytech/zeytech-adonis-file-upload/database/adonis-file-upload.dbml
+// * Path: /Users/steve.krenek/work/zeytech/zeytech-adonis-file-upload
+// * Created Date: Monday, August 16th 2021, 1:18:38 pm
+// * Author: Steve Krenek (https://github.com/skrenek)
+// *
+// * Copyright (c) 2021 Zeytech Inc.
+// */
+
 enum enu_storage_type {
   local
   s3

@@ -1,3 +1,13 @@
+/*
+ * File: AfuRouteHelper.ts
+ * Created Date: Aug 18, 2021
+ * Copyright (c) 2021 Zeytech Inc. (https://zeytech.com)
+ * Author: Steve Krenek (https://github.com/skrenek)
+ * -----
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 // import { Router } from '@adonisjs/http-server/build/standalone'
 import { Route } from '@adonisjs/http-server/build/src/Router/Route'
 import { RouteGroup } from '@adonisjs/http-server/build/src/Router/Group'

@@ -1,8 +1,12 @@
 {
   "name": "@zeytech/adonis-file-upload",
-  "version": "1.0.76",
+  "version": "1.1.0",
   "description": "File upload plugin for Zeytech API work.",
   "main": "build/providers/FileUploadProvider.js",
+  "repository": {
+    "url": "git://github.com/zeytechinc/file-upload-adonisjs.git"
+  },
+  "keywords": ["adonisjs", "upload", "file"],
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
@@ -22,8 +26,11 @@
     "co:login": "aws codeartifact login --tool npm --repository zeytech-internal --domain zeytech --domain-owner 353361721131 --profile zeytech-dev --region us-east-1",
     "prepare": "npm run co:login"
   },
-  "author": "Zeytech Inc.",
-  "license": "Unlicense",
+  "author": "Zeytech Inc (https://zeytech.com)",
+  "contributors": [
+    "Steve Krenek (https://github.com/skrenek)"
+  ],
+  "license": "MIT",
   "types": "build/adonis-typings/index.d.ts",
   "typings": "build/adonis-typings/index.d.ts",
   "devDependencies": {
@@ -73,9 +80,9 @@
   },
   "adonisjs": {
     "instructions": "./build/instructions.js",
-    "types": "zeytech-adonis-file-upload",
+    "types": "@zeytech/file-upload-adonisjs",
     "providers": [
-      "zeytech-adonis-file-upload"
+      "@zeytech/file-upload-adonisjs"
     ],
     "templates": {
       "basePath": "./build/templates",

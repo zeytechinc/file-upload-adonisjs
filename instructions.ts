@@ -1,3 +1,13 @@
+/*
+ * File: instructions.ts
+ * Created Date: Aug 16, 2021
+ * Copyright (c) 2021 Zeytech Inc. (https://zeytech.com)
+ * Author: Steve Krenek (https://github.com/skrenek)
+ * -----
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 import { ApplicationContract } from '@ioc:Adonis/Core/Application'
 import * as sinkStatic from '@adonisjs/sink'
 import { join } from 'path'
