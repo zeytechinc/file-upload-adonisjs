@@ -1,12 +1,16 @@
 {
   "name": "@zeytech/file-upload-adonisjs",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "File upload plugin for Zeytech API work.",
   "main": "build/providers/FileUploadProvider.js",
   "repository": {
     "url": "git://github.com/zeytechinc/file-upload-adonisjs.git"
   },
-  "keywords": ["adonisjs", "upload", "file"],
+  "keywords": [
+    "adonisjs",
+    "upload",
+    "file"
+  ],
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
