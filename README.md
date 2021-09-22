@@ -16,6 +16,7 @@
     - [Listening to Upload Events](#listening-to-upload-events)
     - [File Upload Endpoint Properties](#file-upload-endpoint-properties)
     - [Webhooks](#webhooks)
+    - [Filename Formats](#filename-formats)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -86,7 +87,7 @@ After installation, run the provided database schema migrations to add the neces
 
 ### Applying Middleware to Provided Routes
 
-If you need to apply middleware to the provided routes, you can use the provided helper class to do so.  See the example below.
+If you need to apply middleware to the provided routes, you can use the included helper class to do so.  See the example below.
 
 ```typescript
 import Route from '@ioc:Adonis/Core/Route'
@@ -109,6 +110,7 @@ Built-in Events
 * createdAt, updatedAt - standard timestamps
 * fileSizeBytes - the file size in bytes
 * filename - the filename on the server / storage mechanism
+* fileUploadEndpointId - id of the file upload endpoint this upload was sent to
 
 In addition, each endpoint can emit its own event if it wishes.  Simply set the `completionEventName` property.  Events emmitted in this manner will have the same data as above.  Note that you may also want to [register these events](https://docs.adonisjs.com/guides/events#making-events-type-safe) in your contracts/events.ts file if you want type safety around them.
 
@@ -143,7 +145,25 @@ You can also attach webhooks to endpoints via the database.  When a file upload 
 }
 ```
 
+### Filename Formats
+
+File upload endpoint's filenameFormat supports several mustache-like (`{variable}`) placeholders as described below.  
+
+* {cuid} - collision resistant id. See [AdonisJS's docs](https://docs.adonisjs.com/guides/helpers#cuid) on it.
+* {timestamp} - inserts an ISO8601-*like* timestamp in the form yyyy-MM-ddTHHmmss_SSS
+* {original} - inserts the original uploaded filename, minus the extension
+* {ext} - inserts the uploaded file's extension
+
+Examples:
+
+* `my-file-{cuid}.jpg`
+* `some-file-{timestamp}.png`
+* `{original}_{timestamp}.csv`
+* `some-upload.{ext}`
+
 ----
+
+
 
 [npm-image]: https://img.shields.io/npm/v/@zeytech/file-upload-adonisjs.svg?style=for-the-badge&logo=npm
 [npm-url]: https://npmjs.org/package/@zeytech/file-upload-adonisjs "npm"
