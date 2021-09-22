@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of contents
 
-- [@zeytech/file-uploads-adonisjs](#zeytechfile-uploads-adonisjs)
+- [@zeytech/file-upload-adonisjs](#zeytechfile-upload-adonisjs)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Features](#features)
@@ -20,7 +20,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# @zeytech/file-uploads-adonisjs
+# @zeytech/file-upload-adonisjs
 
 [![npm-image]][npm-url] [![license-image]][license-url] [![typescript-image]][typescript-url]
 
@@ -32,9 +32,9 @@ This package provides database-driven file uploads for AdonisJS applications.  I
 
 ## Installation
 
-`npm install @zeytech/file-uploads-adonisjs`
+`npm install @zeytech/file-upload-adonisjs`
 
-`node ace configure @zeytech/file-uploads-adonisjs`
+`node ace configure @zeytech/file-upload-adonisjs`
 
 ## Features
 
@@ -165,10 +165,10 @@ Examples:
 
 
 
-[npm-image]: https://img.shields.io/npm/v/@zeytech/file-uploads-adonisjs.svg?style=for-the-badge&logo=npm
-[npm-url]: https://npmjs.org/package/@zeytech/file-uploads-adonisjs "npm"
+[npm-image]: https://img.shields.io/npm/v/@zeytech/file-upload-adonisjs.svg?style=for-the-badge&logo=npm
+[npm-url]: https://npmjs.org/package/@zeytech/file-upload-adonisjs "npm"
 
-[license-image]: https://img.shields.io/npm/l/@zeytech/file-uploads-adonisjs?color=blueviolet&style=for-the-badge
+[license-image]: https://img.shields.io/npm/l/@zeytech/file-upload-adonisjs?color=blueviolet&style=for-the-badge
 [license-url]: LICENSE.md "license"
 
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
