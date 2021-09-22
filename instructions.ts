@@ -97,7 +97,7 @@ function copyEventsContract(projectRoot: string, sink: typeof sinkStatic) {
     // give them instructions to add the event to the file
     messages.push(
       `Please add ${color.bold(
-        color.green(`'upload:afu': FileUploadHistory`)
+        color.green(`'upload:fua': FileUploadHistory`)
       )} to your EventList interface in contracts.`
     )
   } else {

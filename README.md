@@ -100,7 +100,7 @@ FuaRouteHelper.getRoute(Route.routes, 'fua.index')?.middleware('some-middleware'
 FuaRouteHelper.getRouteGroup(Route.routes)?.middleware('some-middleware')
 ```
 
-### Listening to Upload Events 
+### Listening to Upload Events
 
 Built-in Events
 
@@ -147,7 +147,7 @@ You can also attach webhooks to endpoints via the database.  When a file upload 
 
 ### Filename Formats
 
-File upload endpoint's filenameFormat supports several mustache-like (`{variable}`) placeholders as described below.  
+File upload endpoint's filenameFormat supports several mustache-like (`{variable}`) placeholders as described below.
 
 * {cuid} - collision resistant id. See [AdonisJS's docs](https://docs.adonisjs.com/guides/helpers#cuid) on it.
 * {timestamp} - inserts an ISO8601-*like* timestamp in the form yyyy-MM-ddTHHmmss_SSS
@@ -165,10 +165,10 @@ Examples:
 
 
 
-[npm-image]: https://img.shields.io/npm/v/@zeytech/file-upload-adonisjs.svg?style=for-the-badge&logo=npm
-[npm-url]: https://npmjs.org/package/@zeytech/file-upload-adonisjs "npm"
+[npm-image]: https://img.shields.io/npm/v/@zeytech/file-uploads-adonisjs.svg?style=for-the-badge&logo=npm
+[npm-url]: https://npmjs.org/package/@zeytech/file-uploads-adonisjs "npm"
 
-[license-image]: https://img.shields.io/npm/l/@zeytech/file-upload-adonisjs?color=blueviolet&style=for-the-badge
+[license-image]: https://img.shields.io/npm/l/@zeytech/file-uploads-adonisjs?color=blueviolet&style=for-the-badge
 [license-url]: LICENSE.md "license"
 
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
