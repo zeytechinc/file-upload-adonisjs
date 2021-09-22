@@ -156,10 +156,10 @@ File upload endpoint's filenameFormat supports several mustache-like (`{variable
 
 Examples:
 
-* `my-file-{cuid}.jpg`
-* `some-file-{timestamp}.png`
-* `{original}_{timestamp}.csv`
-* `some-upload.{ext}`
+* Upload `dsc_0123456789.jpg` ⇒  `my-file-{cuid}.jpg` ⇒ `my-file-cktvtwhlx0000r8o7au9006sg.jpg`
+* Upload `anything.png` ⇒ `some-file-{timestamp}.png` ⇒ `some-file-2021-09-22T131842_123.png`
+* Upload `lotsa-data.csv` ⇒ `{original}_{timestamp}.csv` ⇒ `lotsa-data_2021-09-22T131922_456.csv`
+* Upload `home-movie.mp4` ⇒ `some-upload.{ext}` ⇒ `some-upload.mp4`
 
 ----
 
