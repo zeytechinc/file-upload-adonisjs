@@ -1,5 +1,5 @@
 /*
- * File: AfuRouteHelper.ts
+ * File: FuaRouteHelper.ts
  * Created Date: Aug 18, 2021
  * Copyright (c) 2021 Zeytech Inc. (https://zeytech.com)
  * Author: Steve Krenek (https://github.com/skrenek)
@@ -13,7 +13,7 @@ import { Route } from '@adonisjs/http-server/build/src/Router/Route'
 import { RouteGroup } from '@adonisjs/http-server/build/src/Router/Group'
 import { RouteResource } from '@adonisjs/http-server/build/src/Router/Resource'
 
-export class AfuRouteHelper {
+export class FuaRouteHelper {
   public static getRoute(routes: any[], routeName: string): Route | undefined {
     let result: Route | undefined
     for (const item of routes) {
@@ -44,7 +44,7 @@ export class AfuRouteHelper {
           // @ts-ignore
           name = group.routes[0].name
         }
-        if (name && name.indexOf('afu') === 0) {
+        if (name && name.indexOf('fua') === 0) {
           return group as RouteGroup
         }
       }

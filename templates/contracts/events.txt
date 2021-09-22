@@ -12,6 +12,6 @@ import FileUploadHistory from 'App/Models/FileUploadHistory'
 
 declare module '@ioc:Adonis/Core/Event' {
   interface EventsList {
-    'upload:afu': FileUploadHistory
+    'fua:upload': FileUploadHistory
   }
 }

@@ -57,7 +57,7 @@ export default class FileUploadsController {
       .preload('histories')
       .first()
     if (!data) {
-      throw new Exception(`No record found for ${id}`, 400, 'E_AFU_NOT_FOUND')
+      throw new Exception(`No record found for ${id}`, 400, 'E_FUA_NOT_FOUND')
     }
     return data
   }
@@ -91,7 +91,7 @@ export default class FileUploadsController {
     try {
       const endpoint = await this.endpointModel.find(id, { client: trx })
       if (!endpoint) {
-        throw new Exception(`No record found for ${id}`, 400, 'E_AFU_NOT_FOUND')
+        throw new Exception(`No record found for ${id}`, 400, 'E_FUA_NOT_FOUND')
       }
       const webhookDelete = trx
         .from('file_upload_webhooks')
@@ -133,7 +133,7 @@ export default class FileUploadsController {
       .preload('webhooks')
       .first()
     if (!endpoint) {
-      throw new Exception(`No record found for ${endpointUri}`, 400, 'E_AFU_NOT_FOUND')
+      throw new Exception(`No record found for ${endpointUri}`, 400, 'E_FUA_NOT_FOUND')
     }
     const fileValidationOptions: Partial<FileValidationOptions> = {}
     if (endpoint.accept) {
@@ -190,7 +190,7 @@ export default class FileUploadsController {
           for (const webhook of endpoint.webhooks) {
             this.processWebhook(endpoint, webhook, result, historyRec, logger)
           }
-          this.event.emit('upload:afu', historyRec)
+          this.event.emit('fua:upload', historyRec)
           if (endpoint.completionEventName) {
             this.event.emit(endpoint.completionEventName, historyRec)
           }
@@ -207,7 +207,7 @@ export default class FileUploadsController {
     const { history_id: historyId } = params
     const history = await this.historyModel.find(historyId)
     if (!history || history.deletedAt) {
-      throw new Exception('Download not found', 400, 'E_AFU_NOT_FOUND')
+      throw new Exception('Download not found', 400, 'E_FUA_NOT_FOUND')
     }
     const endpoint = await this.endpointModel.find(history.fileUploadEndpointId)
     if (endpoint.storageType === StorageType.local) {

@@ -75,7 +75,7 @@ export default class FileUploadProvider {
             .as('download')
         }
       })
-      .as('afu')
+      .as('fua')
     if (apiPrefix) {
       routeGroup = routeGroup.prefix(apiPrefix)
     }
