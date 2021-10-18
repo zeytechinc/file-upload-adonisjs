@@ -187,12 +187,23 @@ export default class FileUploadsController {
             filename: join(storagePath, result.destinationFilename),
             fileUploadEndpointId: endpoint.id,
           })
-          for (const webhook of endpoint.webhooks) {
-            this.processWebhook(endpoint, webhook, result, historyRec, logger)
+          const eventPayload = {
+            historyRecord: historyRec,
+            requestBody: request.body(),
           }
-          this.event.emit('fua:upload', historyRec)
+          for (const webhook of endpoint.webhooks) {
+            this.processWebhook(
+              endpoint,
+              webhook,
+              result,
+              historyRec,
+              logger,
+              eventPayload.requestBody
+            )
+          }
+          this.event.emit('fua:upload', eventPayload)
           if (endpoint.completionEventName) {
-            this.event.emit(endpoint.completionEventName, historyRec)
+            this.event.emit(endpoint.completionEventName, eventPayload)
           }
         } catch (err) {
           throw err
@@ -254,7 +265,8 @@ export default class FileUploadsController {
     webhook: any,
     result: FileUploadResultContract,
     historyRec: any,
-    logger: LoggerContract
+    logger: LoggerContract,
+    requestBody: any
   ) {
     const url = webhook.webhookUrl
     const apiPrefix = this.config.get('file-uploads.apiEndpointPrefix', '')
@@ -269,6 +281,7 @@ export default class FileUploadsController {
       filename: result.destinationFilename,
       size: result.size,
       expires: result.expiration,
+      requestBody: requestBody,
     }
     const downloadsEnabled = this.config.get('file-uploads.enableDownloads', false) === true
     if (downloadsEnabled) {
