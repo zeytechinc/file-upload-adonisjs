@@ -22,4 +22,5 @@ export interface FileUploadResultContract {
   size: number
   errors?: FileUploadError[]
   expiration?: string
+  id?: number
 }
