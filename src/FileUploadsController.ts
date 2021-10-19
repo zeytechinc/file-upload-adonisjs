@@ -187,6 +187,7 @@ export default class FileUploadsController {
             filename: join(storagePath, result.destinationFilename),
             fileUploadEndpointId: endpoint.id,
           })
+          result.id = historyRec.id
           const eventPayload = {
             historyRecord: historyRec,
             requestBody: request.body(),
