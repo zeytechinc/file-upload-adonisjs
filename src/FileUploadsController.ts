@@ -18,7 +18,7 @@ import { isAbsolute, join } from 'path'
 import fs from 'fs/promises'
 import { constants } from 'fs'
 import FileManager from './FileManager'
-import { FileUploadResultContract, StorageType } from './Contracts'
+import { FileUploadResultContract, StorageType, WebhookType } from './Contracts'
 import axios from 'axios'
 import { DatabaseContract, TransactionClientContract } from '@ioc:Adonis/Lucid/Database'
 
@@ -30,7 +30,7 @@ export default class FileUploadsController {
    */
   constructor(
     protected database: DatabaseContract,
-    protected endpointModel: any, //typeof FileUploadEndpoint,
+    protected endpointModel: any, // typeof FileUploadEndpoint,
     protected historyModel: any, // typeof FileUploadHistory,
     protected event: EmitterContract,
     protected config: ConfigContract,
@@ -164,6 +164,7 @@ export default class FileUploadsController {
       if (!file.isValid) {
         result.errors = file.errors
         result.result = 'failed'
+        this.processErrorWebhook(endpoint, result, logger, request.body())
       } else {
         if (endpoint.autoExpirationEnabled && endpoint.autoExpirationSeconds) {
           result.expiration = FileManager.getExpirationDate(endpoint.autoExpirationSeconds)
@@ -193,20 +194,32 @@ export default class FileUploadsController {
             requestBody: request.body(),
           }
           for (const webhook of endpoint.webhooks) {
-            this.processWebhook(
-              endpoint,
-              webhook,
-              result,
-              historyRec,
-              logger,
-              eventPayload.requestBody
-            )
+            if (webhook.webhookType === WebhookType.success && result.result === 'success') {
+              this.processWebhook(
+                endpoint,
+                webhook,
+                result,
+                historyRec,
+                logger,
+                eventPayload.requestBody
+              )
+            } else if (webhook.webhookType === WebhookType.failure && result.result === 'failed') {
+              this.processWebhook(
+                endpoint,
+                webhook,
+                result,
+                historyRec,
+                logger,
+                eventPayload.requestBody
+              )
+            }
           }
           this.event.emit('fua:upload', eventPayload)
           if (endpoint.completionEventName) {
             this.event.emit(endpoint.completionEventName, eventPayload)
           }
         } catch (err) {
+          this.processErrorWebhook(endpoint, result, logger, request.body())
           throw err
         }
       }
@@ -261,11 +274,24 @@ export default class FileUploadsController {
     }
   }
 
+  private async processErrorWebhook(
+    endpoint: any,
+    result: FileUploadResultContract,
+    logger: LoggerContract,
+    requestBody: any
+  ) {
+    const webhooks: any[] = endpoint.webhooks
+    const errorWebhooks = webhooks.filter((webhook) => webhook.webhookType === WebhookType.failure)
+    for (const webhook of errorWebhooks) {
+      this.processWebhook(endpoint, webhook, result, null, logger, requestBody)
+    }
+  }
+
   private async processWebhook(
     endpoint: any,
     webhook: any,
     result: FileUploadResultContract,
-    historyRec: any,
+    historyRec: any | null,
     logger: LoggerContract,
     requestBody: any
   ) {
@@ -276,7 +302,7 @@ export default class FileUploadsController {
     if (apiPrefix) {
       downloadUrl += `/${apiPrefix}`
     }
-    downloadUrl += `/${apiBaseEndpoint}/${endpoint.id}/download/${historyRec.id}`
+    downloadUrl += `/${apiBaseEndpoint}/${endpoint.id}/download/${historyRec?.id}`
     const payload: any = {
       endpointName: endpoint.endpointName,
       filename: result.destinationFilename,
@@ -285,7 +311,7 @@ export default class FileUploadsController {
       requestBody: requestBody,
     }
     const downloadsEnabled = this.config.get('file-uploads.enableDownloads', false) === true
-    if (downloadsEnabled) {
+    if (downloadsEnabled && historyRec !== null && historyRec !== undefined) {
       payload.url = downloadUrl
     }
 
@@ -294,14 +320,14 @@ export default class FileUploadsController {
       if (webhookResponse.status >= 400) {
         logger.error(
           'webhook failure for endpoint %s, history id %s to url %s; webhook response %o',
-          [endpoint.id, historyRec.id, url, webhookResponse]
+          [endpoint.id, historyRec?.id, url, webhookResponse]
         )
       }
     } catch (err) {
       logger.error(
         'webhook exception for endpoint %s, history id %s to url %s; error %o',
         endpoint.id,
-        historyRec.id,
+        historyRec?.id,
         url,
         err
       )
