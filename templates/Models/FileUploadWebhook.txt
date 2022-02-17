@@ -11,6 +11,11 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
+export enum WebhookType {
+  success = 'success',
+  failure = 'failure',
+}
+
 export default class FileUploadWebhook extends BaseModel {
   @column({ isPrimary: true })
   public id: number
@@ -26,6 +31,9 @@ export default class FileUploadWebhook extends BaseModel {
 
   @column()
   public webhookUrl: string
+
+  @column()
+  public webhookType: WebhookType
 
   @column()
   public description: string | null
