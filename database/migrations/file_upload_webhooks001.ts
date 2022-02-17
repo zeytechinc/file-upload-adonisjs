@@ -17,7 +17,7 @@ export default class FileUploadWebhooks extends BaseSchema {
     this.schema.table(this.tableName, (table) => {
       table
         .enu('webhook_type', ['success', 'failure'], {
-          useNative: true,
+          useNative: false,
           enumName: 'enu_fua_webhook_type',
         })
         .defaultTo('success')
