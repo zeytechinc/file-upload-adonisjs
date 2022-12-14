@@ -15,6 +15,11 @@ export enum StorageType {
   s3 = 's3',
 }
 
+export enum WebhookType {
+  success = 'success',
+  failure = 'failure',
+}
+
 export interface FileUploadResultContract {
   result: 'success' | 'failed'
   originalFilename: string

@@ -44,7 +44,7 @@ export default class FileUploadEndpoints extends BaseSchema {
       table.string('accept', 2048).comment('comma-delimited string of accepted file extensions.')
       table.boolean('multiple_files_enabled').notNullable().defaultTo(true)
       table
-        .enu('storage_type', ['local', 's3'], { useNative: true, enumName: 'enu_po_status' })
+        .enu('storage_type', ['local', 's3'], { useNative: true, enumName: 'enu_storage_types' })
         .defaultTo('local')
       table.string('storage_path', 1024).notNullable().defaultTo('')
       table.boolean('auto_expiration_enabled').notNullable().defaultTo(false)

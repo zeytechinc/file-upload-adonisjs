@@ -36,6 +36,7 @@ table file_upload_webhooks {
   updated_at timestamp [not null]
   file_upload_endpoint_id integer [not null, ref: > file_upload_endpoints.id]
   webhook_url varchar(2048) [not null]
+  webhook_type enu_fua_webhook_type [not null, default: "success"]
   description varchar(1024)
 }
 

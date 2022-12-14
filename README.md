@@ -133,7 +133,7 @@ In addition, each endpoint can emit its own event if it wishes.  Simply set the 
 
 ### Webhooks
 
-You can also attach webhooks to endpoints via the database.  When a file upload occurs, if the endpoint has configured webhooks, these URLs will be called via POST with the following payload:
+You can also attach webhooks to endpoints via the database.  When a file upload occurs, if the endpoint has configured webhooks for the upload result type (sucess or failure), these URLs will be called via POST with the following payload:
 
 ```typescript
 {
@@ -141,7 +141,7 @@ You can also attach webhooks to endpoints via the database.  When a file upload 
   filename: string
   size: number // file size in bytes
   expires: string // ISO8601 timestamp
-  url? string // URL to download file, if downloads are enabled
+  url? string // URL to download file, if successful and downloads are enabled
 }
 ```
 
