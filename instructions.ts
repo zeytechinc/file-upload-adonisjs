@@ -135,6 +135,7 @@ export default async function instructions(
   makeMigration(projectRoot, app, sink, 'file_upload_endpoints')
   makeMigration(projectRoot, app, sink, 'file_upload_histories')
   makeMigration(projectRoot, app, sink, 'file_upload_webhooks')
+  makeMigration(projectRoot, app, sink, 'file_upload_webhooks001')
 
   copyEventsContract(projectRoot, sink)
 
